@@ -1,5 +1,6 @@
 import requests
 import json
+from vote_code import vote
 
 articleID = None
 def getComments(URL):
@@ -34,14 +35,22 @@ def sendVotes(amount, commentID):
             r = requests.post(f"https://www.is.fi/rest/articles/{articleID}/comments/{commentID}/votes", json=body, headers=headers)
             if r.status_code != 200:
                 print("Ei toimi")
+        print("all done!")
+        exit()
 
     except Exception as e:
         print(f"Ei voi äänestää :( {str(e)}")
 
+tapa = input("Haluatko antaa ääniä kyselylle? y/n: ")
 
-URL = input("Anna uutisen linkki jossa on kommenttisi: ")
+URL = input("Anna uutisen linkki jossa on kommentti/kysely: ")
 if URL == "q":
     exit()
+
+elif tapa == "y":
+    votes = vote(URL)
+    votes.getVoteSite()
+
 comments = getComments(URL)
 commentName = input("Anna kommentin käyttäjänimi: ")
 if commentName == "q":

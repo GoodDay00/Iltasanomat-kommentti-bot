@@ -1,6 +1,7 @@
 import requests
 import urllib.request
 import time
+import fuctions
 from bs4 import BeautifulSoup
 
 class vote:
@@ -47,7 +48,9 @@ class vote:
                 r = requests.post("https://www.is.fi/rest/quick-survey/vote", json=body, headers=headers)
                 if r.status_code != 200:
                     print("Ei toimi")
-            print("All done!")
+                else:
+                    fuctions.progress(i,int(määrä), "Lisätään ääniä")
+            
             exit()
 
         except Exception as e:

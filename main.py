@@ -1,5 +1,6 @@
 import requests
 import json
+import fuctions
 from vote_code import vote
 
 articleID = None
@@ -23,6 +24,7 @@ def findCommentId(commentList,name):
                 print("Users comment found!")
                 return user['id']
         print("kommenttia ei löytynyt tuolla nimimerkillä")
+        exit()
     except Exception as e:
         print(f"error: kommenttia ei löydy! {str(e)}")
 
@@ -35,7 +37,9 @@ def sendVotes(amount, commentID):
             r = requests.post(f"https://www.is.fi/rest/articles/{articleID}/comments/{commentID}/votes", json=body, headers=headers)
             if r.status_code != 200:
                 print("Ei toimi")
-        print("all done!")
+            else:
+                fuctions.progress(i, int(amount), "Lähetetään ääniä")
+        
         exit()
 
     except Exception as e:
